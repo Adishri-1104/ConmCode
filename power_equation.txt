@@ -1,0 +1,47 @@
+% ---------------Power Equation
+clc;
+clear all;
+%-----closing all previous data
+disp('enter the number of data points')
+n=input('')
+disp('enter the values of x')
+for(i=1:n)
+x(i)=input('');
+end
+x
+disp('enter the values of y')
+for(i=1:n)
+y(i)=input('');
+end
+y
+X=log10(x)
+Y=log10(y)
+sumx=sum(X)
+sumy=sum(Y)
+sumxx=sum(X.*X)
+sumxy=sum(X.*Y)
+p=[sumxx sumx;sumx n]
+q=[sumxy;sumy]
+%------------
+soln=p\q;
+disp('answer: ')
+A=soln(1)
+B=soln(2)
+b=A
+a=10^B
+fprintf ('the required straight line is y=%f*x^%f',a,b)
+plot(x,y,'o')
+hold on;
+xmin=min(x)
+xmax=max(x)
+x1=linspace(xmin,xmax,100);
+y1=a*x1.^b;
+%----------Matlab solver
+p=polyfit(X,Y,1)
+A=p(1)
+B=p(2)
+a=10^B
+b=A
+plot(x1,y1,'r')
+grid on;
+title('power equation graph')

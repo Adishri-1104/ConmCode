@@ -1,0 +1,32 @@
+clear all;
+clc;
+close all;
+%----------Define section---
+f=inline('50*(4-x)','x')
+%----------accepting user input--
+Lx=input('enter length of rod')
+hx=input('uniform spacing between the nodes in x direction')
+Lt=input('total time span')
+ht=input('uniform time spacing between the steps')
+alpha=input('enter value of alpha')
+T_left=input('enter temp at left end')
+T_right=input('enter temp at right end')
+%--------calculating no of nodes
+nx=(Lx/hx)+1;
+nt=(Lt/ht)+1;
+lambda=(alpha*ht)/(hx*hx);
+%--------generating x data points---------
+x=0:hx:Lx
+for j=1:nt
+T(1,j)=T_left;
+T(nx,j)=T_right;
+end
+for i=2:nx-1
+T(i,1)=f(x(i))
+end
+for j=1:nt-1
+for i=2:nx-1
+T(i,j+1)=T(i,j)+lambda*(T(i+1,j)-2*T(i,j)+T(i-1,j));
+end
+end
+T

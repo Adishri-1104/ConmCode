@@ -1,0 +1,48 @@
+% ------Quaratic Fit
+clc;
+clear all;
+%-----closing all previous data
+disp('enter the number of data points')
+n=input('')
+disp('enter the values of x')
+for(i=1:n)
+x(i)=input('');
+end
+x
+disp('enter the values of y')
+for(i=1:n)
+y(i)=input('');
+end
+y
+%-------calculation of summation-------
+sumx=sum(x)
+sumy=sum(y)
+sumxx=sum(x.*x)
+sumxy=sum(x.*y)
+sumx4=sum(x.*x.*x.*x)
+sumx3=sum(x.*x.*x)
+sumxxy=sum(x.*x.*y)
+p=[sumx4 sumx3 sumxx;sumx3 sumxx sumx; sumxx sumx n]
+q=[sumxxy;sumxy;sumy]
+%--------
+soln=p\q;
+disp('answer: ')
+a=soln(1)
+b=soln(2)
+c=soln(3)
+fprintf ('the required straight line is y=%f*x*x+%f*x+%f',a,b,c)
+%------graph of the quadratic------
+plot(x,y,'o')
+hold on;
+xmin=min(x);
+xmax=max(x);
+x1=linspace(xmin,xmax,100);
+y1=a*x1.*x1+b*x1+c;
+plot(x1,y1,'r')
+grid on;
+title('quadratic fit')
+%--------------Matlab Solver
+p=polyfit(x,y,2)
+a=p(1)
+b=p(2)
+c=p(3)
