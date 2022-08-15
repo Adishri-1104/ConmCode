@@ -1,0 +1,44 @@
+%STRAIGHT LINE FIT
+close all;
+clear all;
+clc;
+%-----Accepting User Input
+disp('Enter the number of datapoints')
+n=input(' ')
+disp('Enter the x datapoints')
+for i=1:n
+x(i)=input(' ');
+end
+disp('Enter the y datapoints')
+for i=1:n
+y(i)=input(' ');
+end
+%---Computing Summations---
+sumx=sum(x);
+sumy=sum(y);
+sumxx=sum(x.*x);
+sumxy=sum(x.*y);
+%-------defining coefficient matrix
+p=[sumxx sumx;sumx n]
+%-------defining RHS constant vector
+q=[sumxy;sumy]
+%-----Applying MATLAB solver
+soln=p\q
+disp('answer: ')
+%----if not assigned, it won't be possible to put in the plot
+a=soln(1)
+b=soln(2)
+fprintf('The required straight line is y = %f*x+%f',a,b)
+%-------Graph
+plot(x,y,'o')
+hold on
+minx= min(x);
+maxx= max(x);
+x1=linspace(minx, maxx,100);
+
+y1=a*x1+b;
+plot(x1,y1,'r')
+%-----Matlab Solver
+p=polyfit(x,y,1)
+a=p(1)
+b=p(2)
