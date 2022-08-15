@@ -1,0 +1,35 @@
+clc;
+clear all; %-----closing all previous data
+disp('enter the no. of data points')
+n=input('');
+disp('enter the values of x')
+for(i=1:n)
+x(i)=input('');
+end
+x
+disp('enter the values of y')
+for(i=1:n)
+y(i,1)=input('');
+end
+y
+disp('enter the value of x where y is to be calculated')
+xint=input('')
+T(:,1)=y
+for(i=2:n)
+temp=diff(T(:,i-1));
+temp=[temp;0];
+T(:,i)=temp;
+T(((n-i)+2):n,i)=NaN;
+end
+T
+r=(xint-x(1))/(x(2)-x(1))
+z=T(1,:)
+sum=z(1);
+for(i=2:n)
+prod=1;
+prod=prod*(r-(i-2));
+sum=sum+((z(i)*prod)/(factorial(i-1)));
+end
+
+sum
+interpolation=interp1(x,y,xint,'spline')

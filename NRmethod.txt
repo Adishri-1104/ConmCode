@@ -1,0 +1,47 @@
+clear all;
+close all;
+clc;
+%-----------------------Defining Function-------------------------
+f=inline('3*x-cos(x)-1','x');
+fdash=inline('3+sin(x)','x');
+%----------------------Plotting Function--------------------------
+x=linspace(-10,10,200);
+y=f(x);
+plot(x,y)
+grid on;
+xlabel('x')
+ylabel('f(x)')
+title('Graph of f(x) vs x')
+%---------------------Accepting User Input-----------------------
+disp('Enter the initial guess ')
+xold=input('');
+accuracy=input('Enter the desired accuracy ');
+%--------------------Max iterations------------------------------
+error=1;
+maxiter=input('Enter Maximum number of iterations ');
+maxiter=100;
+niter=0;
+while(error>accuracy && niter<maxiter)
+ niter=niter+1;
+end
+%-----------------------Running Operation--------------------------
+niter=0;
+%-----------------------MATLAB Solver----------------------------
+root=fzero(f,xold);
+fprintf('root by matlab solver=%f',root);
+fprintf('\n iterno xold xnew error')
+while(error>accuracy)
+ niter=niter+1;
+ y1=f(xold);
+ y2=fdash(xold);
+ if(y2==0)
+ disp('NR Method fails')
+ return
+ end
+ xnew=xold-(y1/y2);
+ error=abs(xold-xnew);
+ fprintf('\n %d %.4f %.4f %.4f',niter,xold,xnew,error);
+ xold=xnew;
+end
+xnew;
+fprintf('\n Root of equation is %f',xnew);
