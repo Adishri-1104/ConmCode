@@ -1,0 +1,58 @@
+clc;
+clear all; 
+%-----closing all previous data---------
+disp('enter no of equations')
+m=input('')
+disp('no. of unknowns')
+n=input('')
+if(m~=n)
+ disp('the number of equations are not equal to number of unknowns')
+return;
+end
+a=zeros(n,n)
+disp('enter the elements of coefficient matrix')
+for(i=1:n)
+ for(j=1:n)
+ a(i,j)=input('');
+ end
+end
+a
+disp('enter the elements of RHS constant vector')
+for(i=1:n)
+ b(i,1)=input('');
+end
+b
+%------------MATLAB Solver--------------
+soln=a\b;
+disp('answer by matlab solver')
+x1=soln(1)
+x2=soln(2)
+x3=soln(3)
+x4=soln(4)
+%-----declaring the initial values--------
+R(1)=0;
+P=zeros(1,n);%----digonal elements----
+Q=zeros(1,n-1);%-----super digonal ------
+R=zeros(1,n);%-----under digonal----
+Y=zeros(1,n-1);%-----gamma---
+for i=1:n
+ P(i)=a(i,i);
+end
+for i=1:n-1
+ Q(i)=a(i,i+1);
+end
+for i=1:n-1
+ R(i+1)=a(i+1,i);
+end
+Y(1)=Q(1)/P(1);
+for i=2:n-1
+ Y(i)=Q(i)/(P(i)-R(i)*Y(i-1));
+end
+W(1)=b(1)/P(1);%------beta-----
+for i=2:n
+ W(i)=(b(i)-R(i)*W(i-1))/(P(i)-R(i)*Y(i-1));
+end
+x(n)=W(n)
+for i=n-1:-1:1
+ x(i)=W(i)-Y(i)*x(i+1)
+end

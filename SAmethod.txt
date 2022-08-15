@@ -1,0 +1,42 @@
+clear all;
+close all; 
+clc;
+%-----------------------Defining Function-------------------------
+f= inline('cos(x)-3*x+1', 'x');
+g= inline('(cos(x)+1)/3', 'x');
+gdash=inline('-sin(x)/3','x');
+%----------------------Plotting Function--------------------------
+x=linspace(-10,10,200);
+y=f(x);
+plot(x,y)
+grid on;
+xlabel('x')
+ylabel('f(x)')
+title('Graph of f(x) vs x')
+%---------------------Accepting User Input-----------------------
+xold= input('Enter the initial guess');
+accuracy= input('Enter the accuracy required');
+error=10;
+%-----------------------MATLAB Solver----------------------------
+root=fzero(f,xold);
+fprintf('\nroot by matlab solver=%f',root)
+%------------------Max iterations--------------------------------
+maxiter=input('\nEnter Maximum number of iterations');
+fprintf('\niteration xold xnew error')
+iteration=0;
+%-----------------------Running Operation--------------------------
+while(error>accuracy && iteration<maxiter)
+ iteration = iteration+1;
+ y1= gdash(xold);
+ if(abs(y1)>1)
+ disp('SA Method diverges')
+ return;
+ end
+ xnew= g(xold);
+ error= abs(xnew-xold);
+ fprintf('\n%d %.4f %.4f %.4f',iteration,xold,xnew,error)
+ xold=xnew; 
+ end
+ 
+xnew;
+fprintf('\nRoot of equation is %.4f',xnew);
