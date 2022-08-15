@@ -1,0 +1,30 @@
+clc;
+clear all; %-----closing all previous data
+disp('enter the number of data points')
+n=input('')
+r=rem(n-1,2);
+if(r~=0)
+disp('enter the correct number of data points')
+return
+end
+%------enter the values of x and y--------
+disp('enter the values of x')
+for(i=1:n)
+x(i)=input('');
+end
+x
+disp('enter the values of y')
+for(i=1:n)
+y(i)=input('');
+end
+y
+%------calculations ------
+sum=0;
+for (i=1:3:n-3)
+h(i)=x(i+1)-x(i);
+sum=sum+(3*h(i)/8)*(y(i)+3*y(i+1)+3*y(i+2)+y(i+3));
+end
+sum
+%-----Matlab solver-------
+disp('the answer by matlabsolver')
+I1=trapz(x,y)

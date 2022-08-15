@@ -1,0 +1,25 @@
+clc;
+clear all;
+disp ('enter lower limit')
+a=input('');
+disp ('enter upper limit')
+b=input('');
+disp ('enter number of segments')
+n=input('');
+r=rem(n,2);
+while(r~=0)
+disp('Enter correct no.of intervals')
+n=input('')
+r=rem(n,2)
+end
+f=inline('exp(x)+4*x-3','x');
+h=(b-a)/n;
+x=a:h:b;
+y=f(x)
+sum=0
+for (i=1:2:n-1)
+sum=sum+(h/3)*(y(i)+4*y(i+1)+y(i+2));
+end
+sum
+disp('the answer by matlabsolver')
+I1=quadv(f,a,b)
