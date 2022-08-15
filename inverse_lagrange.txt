@@ -1,0 +1,32 @@
+clc;
+clear all; %-----closing all previous data
+disp('enter the number of data points')
+n=input('')
+disp('enter the interpolating value of y')
+yint=input('')
+disp('enter the values of x')
+for(i=1:n)
+x(i)=input('');
+end
+x
+disp('enter the values of y')
+for(i=1:n)
+y(i)=input('');
+end
+y
+%----calculations-----------
+sum=0;
+for i=1:n
+N=1;
+D=1;
+for j=1:n
+if (j~=i)
+N=N*(yint-y(j));
+D=D*(y(i)-y(j));
+end
+end
+sum=sum+(N/D)*x(i);
+end
+sum
+%----------Matlab solver----------
+interpolation=interp1(y,x,yint,'linear')

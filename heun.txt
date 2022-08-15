@@ -1,0 +1,35 @@
+clc;
+clear all;
+%---------clearing previous data
+f=inline('-5*y+exp(-2*x)','x','y');
+disp('enter the initial value of x')
+x0=input('');
+disp('enter the initial value of y')
+y0=input('');
+disp('enter the step size(h)')
+h=input('');
+disp('enter the last value of x')
+xsoln=input('');
+x=x0:h:xsoln;
+y(1)=y0;
+n=(xsoln-x0)/h;
+n=round(n);
+accuracy=input('Enter Desired Accuracy');
+for(i=1:n)
+ y_pred=y(i)+h*f(x(i),y(i))
+ error=10
+ while(error>accuracy)
+ avg_slope=(1/2)*(f(x(i),y(i))+f(xsoln,y_pred))
+ y_corr=y(i)+h*avg_slope
+ error=abs(y_pred-y_corr)
+ y_pred=y_corr
+ end
+ y(i+1)=y_corr
+end
+y_soln=y(n+1)
+[xnew ynew]=ode23(f,[x0,xsoln],[y0])
+p=[xnew ynew]
+ysol=p(end)
+plot(x,y)
+hold on;
+plot(xnew,ynew)

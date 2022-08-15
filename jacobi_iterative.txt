@@ -1,0 +1,51 @@
+clc;
+clear all; 
+%-----closing all previous data
+disp('enter no of equations')
+m=input('')
+disp('no. of unknowns')
+n=input('')
+if(m~=n)
+ disp('the number of equations are not equal to number of unknowns')
+return;
+end
+disp('enter the elements of coefficient matrix')
+for(i=1:n)
+ for(j=1:n)
+ a(i,j)=input('');
+ end
+end
+a
+disp('enter the elements of RHS constant vector')
+for(i=1:n)
+ b(i,1)=input('');
+end
+b
+iteration=0;
+accuracy=input('Enter desired accuracy ')
+maxiter=input('\n\n enter maximum no. of iterations')
+maxerror=10;
+%------------MATLAB Solver--------------
+soln=a\b;
+disp('answer by matlab solver')
+x1=soln(1)
+x2=soln(2)
+x3=soln(3)
+x=zeros(n,1);
+while(maxerror > accuracy & iteration<maxiter)
+ iteration = iteration+1
+ xold=x;
+for(i=1:n)
+ sum=0;
+ for(j=1:n)
+ if(j~=i)
+ sum=sum+a(i,j)*xold(j);
+ end
+ end
+ x(i)=(b(i)-sum)/a(i,i);
+ error(i)=abs(x(i)-xold(i));
+end
+x
+maxerror=max(error);
+end
+x

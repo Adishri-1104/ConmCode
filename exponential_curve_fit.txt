@@ -1,0 +1,48 @@
+% ------------------------------
+clc;
+clear all;
+%-----closing all previous data
+disp('enter the number of data points')
+n=input('')
+disp('enter the values of x')
+for(i=1:n)
+x(i)=input('');
+end
+x
+disp('enter the values of y')
+for(i=1:n)
+y(i)=input('');
+end
+y
+X=x
+Y=log(y)
+sumx=sum(X)
+sumy=sum(Y)
+sumxx=sum(X.*X)
+sumxy=sum(X.*Y)
+p=[sumxx sumx;sumx n]
+q=[sumxy;sumy]
+%------------
+soln=p\q;
+disp('answer: ')
+A=soln(1)
+B=soln(2)
+b=A
+a=exp(B)
+fprintf ('the required straight line is y=%f*exp(%f*x)',a,b)
+plot(x,y,'o')
+hold on;
+xmin=min(x)
+xmax=max(x)
+x1=linspace(xmin,xmax,100);
+
+y1=a*exp(b*x1);
+plot(x1,y1,'r')
+grid on;
+title('Exponential Fit')
+%------------Matlab Solver
+p=polyfit(X,Y,1)
+A=p(1)
+B=p(2)
+a=exp(B)
+b=A
