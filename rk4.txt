@@ -1,0 +1,35 @@
+%RK4
+%3711
+%-----closing all previous data
+clc;
+clear all; 
+%defining the function-------
+f=inline('2-x*y','x','y');
+disp('enter the initial value of x')
+xint=input('');
+disp('enter the initial value of y')
+yint=input('');
+disp('enter the size(h)')
+h=input('');
+disp('enter the last value of x')
+xsoln=input('');
+x=xint:h:xsoln;
+y(1)=yint;
+n=(xsoln-xint)/h
+n=round(n)
+for(i=1:n)
+k1=f(x(i),y(i))
+k2=f(x(i)+(h/2),y(i)+(h/2)*k1)
+k3=f(x(i)+(h/2),y(i)+(h/2)*k2)
+k4=f(x(i)+h,y(i)+h*k3)
+y(i+1)=y(i)+(h/6)*(k1+2*k2+2*k3+k4);
+end
+ysoln=y(n+1)
+ysoln=y(n+1)
+%-----matlab solver
+[xnew ynew]=ode23(f,[xint,xsoln],[yint])
+p=[xnew ynew]
+ysol=p(end)
+plot(x,y)
+hold on;
+plot(xnew,ynew)

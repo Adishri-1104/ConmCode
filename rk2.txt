@@ -1,0 +1,30 @@
+clc;
+clear all;
+%defining the function-------
+f=inline('x+y*z','x','y','z');
+g=inline('x.*x-y.*y','x','y','z');
+disp('enter the initial value of x')
+xint=input('');
+disp('enter the initial value of y')
+yint=input('');
+disp('enter the initial value of z')
+zint=input('');
+disp('enter the size(h)')
+h=input('');
+disp('enter the final value of x')
+xsoln=input('');
+x=xint:h:xsoln;
+y(1)=yint;
+z(1)=zint;
+n=(xsoln-xint)/h
+n=round(n)
+for(i=1:n)
+ k1=f(x(i),y(i),z(i))
+ l1=g(x(i),y(i),z(i))
+ k2=f(x(i)+h,y(i)+h*k1,z(i)+h*l1)
+ l2=g(x(i)+h,y(i)+h*k1,z(i)+h*l1)
+ y(i+1)=y(i)+(h/2)*(k1+k2);
+ z(i+1)=z(i)+(h/2)*(l1+l2);
+end
+ysoln=y(n+1)
+zsoln=z(n+1)
