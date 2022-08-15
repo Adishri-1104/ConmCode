@@ -1,0 +1,42 @@
+close all;
+clear all;
+clc;
+%-----------------defining the function---------------------
+f= inline('x-cos(x)','x');
+%----------------------Plotting Function--------------------------
+x=linspace(-10,10,200);
+y=f(x);
+plot(x,y)
+grid on;
+xlabel('x')
+ylabel('f(x)')
+title('Graph of f(x) vs x')
+%-----------------accepting the user input------------------
+a=input('Enter initial guess value a');
+disp('Enter initial guess value b') 
+b=input('');
+n=input('Enter number of iterations');
+y1=f(a);
+y2=f(b);
+while (y1*y2>0)
+ a=input('enter another first initial guess');
+ b=input('enter another second intial guess');
+ y1=f(a);
+ y2=f(b);
+end
+%-----------------------MATLAB SOLVER---------------------------
+root=fzero(f,a);
+fprintf('root by MATLAB Solver=%f',root)
+for(i=1:n)
+ c=(a+b)/2;
+ y3=f(c);
+ if((y1*y3)<0)
+ b=c;
+ y2=y3;
+ else
+ a=c;
+ y1=y3;
+ end
+ fprintf('\n %.4f',c)
+end
+fprintf('\n\n The root of the equation is %.4f',c)
