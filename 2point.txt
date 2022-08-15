@@ -1,0 +1,31 @@
+clear all;
+close all;
+clc;
+%-------------------------
+%---------------------Define Function-------
+f=inline('exp(-x/2)','x');
+%--------------------------------------
+%--------------------Accepting User Input------
+a=input('Enter the lower limit of integration')
+b=input('Enter the upper limit of integration')
+%----------------------------------
+%----------------------Other Variables----
+c0=1
+c1=1
+xd1=-sqrt(1/3)
+xd2=sqrt(1/3)
+a0=(b+a)/2
+a1=(b-a)/2
+%-----------------------------
+%-------------------------Operations------------
+x1=a0+a1*xd1
+x2=a0+a1*xd2
+f1=f(x1)
+f2=f(x2)
+%------------------------------------
+%----------------------Final Integration----------
+
+I=a1*(c0*f1+c1*f2)
+%-------------------------------------------
+%----------------------MATLAB Solver---------
+I1=quadv(f,a,b)
